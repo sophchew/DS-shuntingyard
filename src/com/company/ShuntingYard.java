@@ -29,7 +29,7 @@ public class ShuntingYard {
                 }
                 stack.pop();
             } else {
-                System.out.println("nothing");
+                System.out.println("None of the above");
             }
         }
 
@@ -78,20 +78,22 @@ public class ShuntingYard {
             if (isNumber(tokens.get(i))) {
                 stack.push(tokens.get(i));
             } else if (isOperator(tokens.get(i))) {
-                int token2 = Integer.parseInt(stack.pop());
-                int token1 = Integer.parseInt(stack.pop());
+                double token2 = Double.parseDouble(stack.pop());
+                double token1 = Double.parseDouble(stack.pop());
                 if(tokens.get(i).equals("/")) {
-                    stack.push(Integer.toBinaryString(token1*token2));
-                    // IP
-
+                    stack.push(Double.toString(token1/token2));
+                } else if (tokens.get(i).equals("*")) {
+                    stack.push(Double.toString(token1*token2));
+                } else if (tokens.get(i).equals("+")) {
+                    stack.push(Double.toString(token1+token2));
+                } else if (tokens.get(i).equals("-")) {
+                    stack.push(Double.toString(token1-token2));
                 }
-                String newString = "(" + token1 + tokens.get(i) + token2 + ")";
-                stack.push(newString);
             }
 
         }
 
-        return 0;
+        return Double.parseDouble(stack.pop());
     }
 
     public static boolean isOperator(String token) {
